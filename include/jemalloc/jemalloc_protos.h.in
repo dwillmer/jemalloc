@@ -17,13 +17,17 @@ JEMALLOC_EXPORT void	*@je_@aligned_alloc(size_t alignment, size_t size)
 JEMALLOC_EXPORT void	*@je_@realloc(void *ptr, size_t size);
 JEMALLOC_EXPORT void	@je_@free(void *ptr);
 
-JEMALLOC_EXPORT void	*@je_@mallocx(size_t size, int flags);
+JEMALLOC_EXPORT void	*@je_@mallocx(size_t size, int flags)
+    JEMALLOC_ATTR(malloc);
 JEMALLOC_EXPORT void	*@je_@rallocx(void *ptr, size_t size, int flags);
 JEMALLOC_EXPORT size_t	@je_@xallocx(void *ptr, size_t size, size_t extra,
     int flags);
-JEMALLOC_EXPORT size_t	@je_@sallocx(const void *ptr, int flags);
+JEMALLOC_EXPORT size_t	@je_@sallocx(const void *ptr, int flags)
+    JEMALLOC_ATTR(pure);
 JEMALLOC_EXPORT void	@je_@dallocx(void *ptr, int flags);
-JEMALLOC_EXPORT size_t	@je_@nallocx(size_t size, int flags);
+JEMALLOC_EXPORT void	@je_@sdallocx(void *ptr, size_t size, int flags);
+JEMALLOC_EXPORT size_t	@je_@nallocx(size_t size, int flags)
+    JEMALLOC_ATTR(pure);
 
 JEMALLOC_EXPORT int	@je_@mallctl(const char *name, void *oldp,
     size_t *oldlenp, void *newp, size_t newlen);
@@ -44,6 +48,3 @@ JEMALLOC_EXPORT void *	@je_@memalign(size_t alignment, size_t size)
 #ifdef JEMALLOC_OVERRIDE_VALLOC
 JEMALLOC_EXPORT void *	@je_@valloc(size_t size) JEMALLOC_ATTR(malloc);
 #endif
-
-typedef void *(chunk_alloc_t)(size_t, size_t, bool *, unsigned);
-typedef bool (chunk_dalloc_t)(void *, size_t, unsigned);
